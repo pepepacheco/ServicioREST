@@ -4,7 +4,7 @@ var controllerAlumno = require('../controller/controllerAlumno.js');
 
 router.get('/', controllerAlumno.get);
 
-router.get('/:nombre', controllerAlumno.getNombre);
+router.get('/:nombre', controllerAlumno.getName);
 
 router.post('/', controllerAlumno.post);
 

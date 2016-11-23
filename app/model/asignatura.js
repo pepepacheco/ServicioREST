@@ -1,14 +1,34 @@
-function asignatura (nombre, ciclo, curso, horas) {
-    var _nombre = nombre;
-    var _ciclo = ciclo;
-    var _curso = curso;
-    var _horas = horas;
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+    host : 'localhost',
+    user : 'root',
+    password : 'root',
+    port : '3306',
+    database : 'ServicioREST'
+});
 
-    return {
-        getNombre : function () {return _nombre;},
-        getCiclo : function () {return _ciclo;},
-        getCurso : function () {return _curso;},
-        getHoras : function () {return _horas;}
+var asignaturaModel = {};
+
+asignaturaModel.loadAll = function (callback) {
+    if (connection) {
+        connection.query('SELECT * FROM Asignatura', function (err, rows) {
+            if (!err)
+                callback(null, rows);
+            else   
+                callback(rows, null);
+        });
+
+    }
+}
+
+asignaturaModel.loadId = function (id, callback) {
+    if (connection) {
+        connection.query('SELECT * FROM Asignatura WHERE id = ?', [id], function (err, rows) {
+            if (!err)
+                callback(null, rows);
+            else
+                callback(err, null)
+        })
     }
 }
 

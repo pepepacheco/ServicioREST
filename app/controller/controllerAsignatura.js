@@ -1,28 +1,21 @@
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-    host : 'localhost',
-    user : 'root',
-    password : 'root',
-    port : '3306',
-    database : 'ServicioREST'
-});
+var asignatura = require('../model/asignatura.js');
 
 module.exports.get = function(req, res, next) {
-    connection.query('SELECT * FROM Asignatura', function(err, rows) {
-        if (!err)
-            res.json(rows);
-        else 
-            res.json({err: "Error en la consulta"})
-    });
+    asignatura.loadAll(function(err, data) {
+        if (data && data.length !== 0)
+            res.json(data);
+        else
+            res.status(404).json({'msg' : 'No hay datos' });
+    })
 }
 
 module.exports.getId = function(req, res, next) {
     var id = req.params.id;
-    connection.query('SELECT * FROM Asignatura WHERE ID = ?', [id], function(err, rows) {
-        if (!err)
-            res.json(rows);
-        else 
-            res.json({err: "Error en la consulta"})
+    asignatura.loadId(id, function(err, data) {
+        if (data && data.length !== 0)
+            res.json(data);
+        else
+            res.status(404).json({"msg" : "No hay datos"});
     });
 }
 

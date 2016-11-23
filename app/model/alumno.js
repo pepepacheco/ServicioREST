@@ -12,22 +12,33 @@ var alumnoModel = {};
 alumnoModel.loadAll = function (callback) {
     if (connection) {
         connection.query('SELECT * FROM Matricula', function(err, rows) {
-        if (!err)
-            callback(null, rows);
-        else 
-            callback(err, null);
+            if (!err)
+                callback(null, rows);
+            else 
+                callback(err, null);
         });
     }
 }
 
-alumnoModel.loadName = function (nombre, callback) {
+alumnoModel.loadName = function (name, callback) {
     if (connection) {
-        connection.query('SELECT * FROM Alumno WHERE nombre = ?', [nombre], function(err, rows) {
-        if (!err)
-            callback(null, rows);
-        else 
-            callback(err, null);
+        connection.query('SELECT * FROM Alumno WHERE nombre = ?', [name], function(err, rows) {
+            if (!err)
+                callback(null, rows);
+            else 
+                callback(err, null);
         });
+    }
+}
+
+alumnoModel.addStudent = function (student, callback) {
+    if (connection) {
+        connection.query('INSERT INTO Alumno SET ?', [student], function (err, result) {
+            if (!err)
+                callback(null, result);
+            else
+                callback(result, null);
+        })
     }
 }
 
