@@ -1,0 +1,36 @@
+[
+    {
+        "id_asignatura" : 1,
+        "id_alumno" : 1,
+        "fecha_inicio" : "09/21/2016",
+        "fecha_fin" : "03/21/2017"
+    },
+
+    {
+        "id_asignatura" : 2,
+        "id_alumno" : 1,
+        "fecha_inicio" : "09/21/2016",
+        "fecha_fin" : "03/21/2017"
+    },
+
+    {
+        "id_asignatura" : 3,
+        "id_alumno" : 1,
+        "fecha_inicio" : "09/21/2016",
+        "fecha_fin" : "03/21/2017"
+    },
+
+    {
+        "id_asignatura" : 4,
+        "id_alumno" : 1,
+        "fecha_inicio" : "09/21/2016",
+        "fecha_fin" : "03/21/2017"
+    },
+
+    {
+        "id_asignatura" : 5,
+        "id_alumno" : 1,
+        "fecha_inicio" : "09/21/2016",
+        "fecha_fin" : "03/21/2017"
+    }        
+]

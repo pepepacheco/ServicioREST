@@ -1,0 +1,41 @@
+[
+	{
+	"id" : "1",
+    "nombre" : "Acceso a datos",
+    "ciclo" : "Desarrollo de aplicaciones multiplataforma",
+    "curso" : "Segundo",
+    "horas" : "5"
+	},
+
+	{
+	"id" : "2",
+    "nombre" : "Desarrollo de Interfaces",
+    "ciclo" : "Desarrollo de aplicaciones multiplataforma",
+    "curso" : "Segundo",
+    "horas" : "8"			
+	},
+
+	{
+	"id" : "3",	
+    "nombre" : "Programacion de servicios y procesos",
+    "ciclo" : "Desarrollo de aplicaciones multiplataforma",
+    "curso" : "Segundo",
+    "horas" : "3"
+	},
+
+	{
+	"id" : "4",
+    "nombre" : "Programacion multimedia y dispositivos moviles",
+    "ciclo" : "Desarrollo de aplicaciones multiplataforma",
+    "curso" : "Segundo",
+    "horas" : "6"
+	},
+    
+	{
+	"id" : "5",
+    "nombre" : "Sistemas de gestion empresarial",
+    "ciclo" : "Desarrollo de aplicaciones multiplataforma",
+    "curso" : "Segundo",
+    "horas" : "4"
+	}	
+]
