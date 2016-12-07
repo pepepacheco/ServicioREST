@@ -5,6 +5,7 @@ var routeIndex = require('./routes/index');
 var routeAlumno = require('./routes/alumno');
 var routeAsignatura = require('./routes/asignatura');
 var routesMatricula = require('./routes/matricula');
+var mysql = require('mysql');
 
 var app = express();
 
@@ -23,6 +24,18 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+
+//connection db
+app.use(
+    connection(mysql, {
+        host : 'localhost',
+        user : 'root',
+        password : 'root',
+        port : '3306',
+        database : 'ServicioREST'
+    }, 'request')
+);
+
 
 // error handlers
 // development error handler
