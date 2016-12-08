@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+var connection  = require('express-myconnection'); 
 var routeIndex = require('./routes/index');
 var routeAlumno = require('./routes/alumno');
 var routeAsignatura = require('./routes/asignatura');

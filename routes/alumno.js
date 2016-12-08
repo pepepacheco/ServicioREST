@@ -2,12 +2,14 @@ var express = require('express');
 var router = express.Router();
 var controllerAlumno = require('../controller/controllerAlumno.js');
 
-router.get('/alumno', controllerAlumno.get);
+router.get('/', controllerAlumno.get);
 
-router.post('/alumno', controllerAlumno.post);
+router.get('/:nombre', controllerAlumno.getNombre);
 
-router.put('/alumno', controllerAlumno.put);
+router.post('/', controllerAlumno.post);
 
-router.delete('/alumno', controllerAlumno.delete);
+router.put('/', controllerAlumno.put);
+
+router.delete('/', controllerAlumno.delete);
 
 module.exports = router;

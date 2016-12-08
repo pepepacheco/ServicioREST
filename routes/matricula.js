@@ -2,12 +2,12 @@ var express = require('express');
 var router = express.Router();
 var controllerMatricula = require('../controller/controllerMatricula.js');
 
-router.get('/matricula', controllerMatricula.get);
+router.get('/', controllerMatricula.get);
 
-router.post('/matricula', controllerMatricula.post);
+router.post('/', controllerMatricula.post);
 
-router.put('/matricula', controllerMatricula.put);
+router.put('/', controllerMatricula.put);
 
-router.delete('/matricula', controllerMatricula.delete);
+router.delete('/', controllerMatricula.delete);
 
 module.exports = router;

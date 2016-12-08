@@ -2,12 +2,14 @@ var express = require('express');
 var router = express.Router();
 var controllerAsignatura = require('../controller/controllerAsignatura.js');
 
-router.get('/asignatura', fcontrollerAsignatura.get);
+router.get('/', controllerAsignatura.get);
 
-router.post('/asignatura', controllerAsignatura.post);
+router.get('/:id', controllerAsignatura.getId);
 
-router.put('/asignatura', controllerAsignatura.put);
+router.post('/', controllerAsignatura.post);
 
-router.delete('/asignatura', controllerAsignatura.delete);
+router.put('/', controllerAsignatura.put);
+
+router.delete('/', controllerAsignatura.delete);
 
 module.exports = router;
