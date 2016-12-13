@@ -15,6 +15,7 @@ if (process.argv[2] === 'create') {
     //create alumno
     var createAlumno = 'CREATE TABLE IF NOT EXISTS Alumno ( \
     ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
+    DNI VARCHAR(9) UNIQUE NOT NULL, \
     Nombre VARCHAR(20) NOT NULL, \
     Apellidos VARCHAR(50) NOT NULL, \
     email VARCHAR(30) NOT NULL \
@@ -75,6 +76,7 @@ else if (process.argv[2] === 'insert') {
                             for (alumno of alumnos) {
                                 var insertAlumnos = 'INSERT INTO Alumno Values ( \
                                 null, \
+                                "' + alumno.dni + '", \
                                 "' + alumno.nombre + '", \
                                 "' + alumno.apellidos + '", \
                                 "' + alumno.email + '" \

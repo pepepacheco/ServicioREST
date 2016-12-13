@@ -32,4 +32,4 @@ asignaturaModel.loadId = function (id, callback) {
     }
 }
 
-module.exports = asignatura;
+module.exports = asignaturaModel;
