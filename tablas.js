@@ -1,10 +1,10 @@
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-    host : 'localhost',
-    user : 'root',
-    password : 'root',
-    port : '3306',
-    database : 'ServicioREST'
+    host: 'localhost',
+    user: 'root',
+    password: 'root',
+    port: '3306',
+    database: 'ServicioREST'
 });
 var fs = require('fs');
 
@@ -21,26 +21,26 @@ if (process.argv[2] === 'create') {
     email VARCHAR(30) NOT NULL \
     );'
     connection.query(createAlumno, function (err, rows) {
-        if (!err) 
+        if (!err)
             console.log(rows);
         else
             console.log(err);
 
     });
-    
+
     //create asignatura
     var createAsignatura = 'CREATE TABLE IF NOT EXISTS Asignatura ( \
     ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
-    Nombre VARCHAR(20) NOT NULL, \
+    Nombre VARCHAR(60) UNIQUE NOT NULL, \
     Ciclo VARCHAR(60) NOT NULL, \
     Curso VARCHAR(10) NOT NULL, \
     Horas int NOT NULL DEFAULT 0\
     );'
     connection.query(createAsignatura, function (err, rows) {
-        if (!err) 
+        if (!err)
             console.log(rows);
         else
-            console.log(err);        
+            console.log(err);
     });
 
     //create matricula
@@ -53,10 +53,10 @@ if (process.argv[2] === 'create') {
     FOREIGN KEY (ID_asignatura) REFERENCES Asignatura(ID) ON DELETE CASCADE \
     );'
     connection.query(createMatricula, function (err, rows) {
-        if (!err) 
+        if (!err)
             console.log(rows);
         else
-            console.log(err);        
+            console.log(err);
     });
 
     //close connection
@@ -72,7 +72,7 @@ else if (process.argv[2] === 'insert') {
                         if (!err) {
 
                             //insert alumnos
-                            var alumnos = JSON.parse(alumn);         
+                            var alumnos = JSON.parse(alumn);
                             for (alumno of alumnos) {
                                 var insertAlumnos = 'INSERT INTO Alumno Values ( \
                                 null, \
@@ -81,17 +81,17 @@ else if (process.argv[2] === 'insert') {
                                 "' + alumno.apellidos + '", \
                                 "' + alumno.email + '" \
                                 );';
-                                
+
                                 connection.query(insertAlumnos, function (err, rows) {
-                                    if (!err) 
+                                    if (!err)
                                         console.log(rows);
                                     else
-                                        console.log(err);        
-                                }); 
-                            }      
+                                        console.log(err);
+                                });
+                            }
 
                             //insert asignaturas
-                            var asignaturas = JSON.parse(asign);         
+                            var asignaturas = JSON.parse(asign);
                             for (asignatura of asignaturas) {
                                 var insertAsignatura = 'INSERT INTO Asignatura Values ( \
                                 null, \
@@ -100,32 +100,32 @@ else if (process.argv[2] === 'insert') {
                                 "' + asignatura.curso + '", \
                                 ' + asignatura.horas + ' \
                                 );';
-                                
+
                                 connection.query(insertAsignatura, function (err, rows) {
-                                    if (!err) 
+                                    if (!err)
                                         console.log(rows);
                                     else
-                                        console.log(err);        
-                                }); 
-                            } 
+                                        console.log(err);
+                                });
+                            }
 
                             //insert matriculas
-                            var matriculas = JSON.parse(matric);         
+                            var matriculas = JSON.parse(matric);
                             for (matricula of matriculas) {
                                 var insertMatriculas = 'INSERT INTO Matricula Values ( \
                                 ' + matricula.id_asignatura + ', \
                                 ' + matricula.id_alumno + ', \
                                 "' + matricula.fecha_inicio + '", \
                                 "' + matricula.fecha_fin + '" \
-                                );';   
+                                );';
                                 connection.query(insertMatriculas, function (err, rows) {
-                                    if (!err) 
+                                    if (!err)
                                         console.log(rows);
                                     else
-                                        console.log(err);        
-                                }); 
+                                        console.log(err);
+                                });
                             }
-                            connection.end();                             
+                            connection.end();
                         }
                     });
                 }
@@ -140,29 +140,29 @@ else if (process.argv[2] === 'delete') {
 
     //delete Matricula
     connection.query('DROP TABLE IF EXISTS Matricula', function (err, rows) {
-        if (!err) 
+        if (!err)
             console.log(rows);
         else
-            console.log(err); 
+            console.log(err);
     });
 
     //delete Alumno
     connection.query('DROP TABLE IF EXISTS Alumno', function (err, rows) {
-        if (!err) 
+        if (!err)
             console.log(rows);
         else
-            console.log(err); 
+            console.log(err);
     });
 
     //delete Asignatura
     connection.query('DROP TABLE IF EXISTS Asignatura', function (err, rows) {
-        if (!err) 
+        if (!err)
             console.log(rows);
         else
-            console.log(err); 
+            console.log(err);
     });
 
-    connection.end();    
+    connection.end();
 }
 
 else {

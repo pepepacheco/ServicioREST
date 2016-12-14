@@ -1,36 +1,32 @@
 [
     {
-        "id_asignatura" : 1,
-        "id_alumno" : 1,
-        "fecha_inicio" : "2016-09-21",
-        "fecha_fin" : "2017-03-21"
+        "id_asignatura": 1,
+        "id_alumno": 1,
+        "fecha_inicio": "2016-09-21",
+        "fecha_fin": "2017-03-21"
     },
-
     {
-        "id_asignatura" : 2,
-        "id_alumno" : 1,
-        "fecha_inicio" : "2016-09-21",
-        "fecha_fin" : "2017-03-21"
+        "id_asignatura": 2,
+        "id_alumno": 1,
+        "fecha_inicio": "2016-09-21",
+        "fecha_fin": "2017-03-21"
     },
-
     {
-        "id_asignatura" : 3,
-        "id_alumno" : 1,
-        "fecha_inicio" : "2016-09-21",
-        "fecha_fin" : "2017-03-21"
+        "id_asignatura": 3,
+        "id_alumno": 1,
+        "fecha_inicio": "2016-09-21",
+        "fecha_fin": "2017-03-21"
     },
-
     {
-        "id_asignatura" : 4,
-        "id_alumno" : 1,
-        "fecha_inicio" : "2016-09-21",
-        "fecha_fin" : "2017-03-21"
+        "id_asignatura": 4,
+        "id_alumno": 1,
+        "fecha_inicio": "2016-09-21",
+        "fecha_fin": "2017-03-21"
     },
-
     {
-        "id_asignatura" : 5,
-        "id_alumno" : 1,
-        "fecha_inicio" : "2016-09-21",
-        "fecha_fin" : "2017-03-21"
-    }        
+        "id_asignatura": 5,
+        "id_alumno": 1,
+        "fecha_inicio": "2016-09-21",
+        "fecha_fin": "2017-03-21"
+    }
 ]
