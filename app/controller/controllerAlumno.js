@@ -117,7 +117,7 @@ module.exports.delete = function (req, res, next) {
             alumno.deleteStudent(id, function (err, result) {
                 if (result && result.length !== 0)
                     res.json(result);
-                else 
+                else
                     res.status(500).json({ "msg": "Error Interno del servidor" });
             });
         }

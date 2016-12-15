@@ -18,7 +18,7 @@ module.exports.get = function (req, res, next) {
     });
 }
 
-module.exports.getForStudent= function (req, res, next) {
+module.exports.getForStudent = function (req, res, next) {
     var dniAlumno = req.params.dni;
     matricula.loadForStudent(dniAlumno, function (err, data) {
         if (data && data.length !== 0)
@@ -87,7 +87,7 @@ module.exports.put = function (req, res, next) {
                     matricula.addOrInsertEnrollment(enrollmentUpdateOrInsert, function (err, result) {
                         if (result && result.length !== 0)
                             res.json(result);
-                        else 
+                        else
                             res.status(500).json({ "msg": "Error Interno del servidor" });
                     });
                 }
@@ -113,11 +113,12 @@ module.exports.delete = function (req, res, next) {
             matricula.deleteEnrollment(idAlumno, idAsignatura, function (err, result) {
                 if (result && result !== 0)
                     res.json(result)
-                else 
-                    res.status(500).json({ "msg": "Error Interno del servidor" });                    
+                else
+                    res.status(500).json({ "msg": "Error Interno del servidor" });
             });
         }
         else
             res.status(400).json({ "msg": "La matrícula no existe" });
     });
+    
 }

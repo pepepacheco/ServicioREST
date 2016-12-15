@@ -59,10 +59,10 @@ matriculaModel.loadForSubject = function (nombre, callback) {
 matriculaModel.loadIds = function (idAlumno, idAsignatura, callback) {
     if (connection) {
         connection.query('SELECT * FROM Matricula WHERE ID_alumno = ? AND ID_asignatura = ?', [idAlumno, idAsignatura], function (err, rows) {
-            if (!err) 
-                callback(null, rows);       
-            else 
-                callback(err, null);         
+            if (!err)
+                callback(null, rows);
+            else
+                callback(err, null);
         });
     }
 }
