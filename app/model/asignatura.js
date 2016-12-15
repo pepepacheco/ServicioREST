@@ -1,8 +1,8 @@
 var mysql = require('mysql');
 var connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: 'root',
+    user: 'default',
+    password: 'default',
     port: '3306',
     database: 'ServicioREST'
 });
@@ -11,7 +11,7 @@ var asignaturaModel = {};
 
 asignaturaModel.loadAll = function (callback) {
     if (connection) {
-        connection.query('SELECT Nombre, Ciclo, Curso, Horas FROM Asignatura', function (err, rows) {
+        connection.query('SELECT * FROM Asignatura', function (err, rows) {
             if (!err)
                 callback(null, rows);
             else
@@ -20,9 +20,20 @@ asignaturaModel.loadAll = function (callback) {
     }
 }
 
+asignaturaModel.loadId = function (id, callback) {
+    if (connection) {
+        connection.query('SELECT * FROM Asignatura WHERE ID = ?', [id], function (err, rows) {
+            if (!err)
+                callback(null, rows);
+            else
+                callback(err, null);
+        });
+    }
+}
+
 asignaturaModel.loadName = function (name, callback) {
     if (connection) {
-        connection.query('SELECT Nombre, Ciclo, Curso, Horas FROM Asignatura WHERE Nombre = ?', [name], function (err, rows) {
+        connection.query('SELECT * FROM Asignatura WHERE Nombre = ?', [name], function (err, rows) {
             if (!err)
                 callback(null, rows);
             else
@@ -33,7 +44,7 @@ asignaturaModel.loadName = function (name, callback) {
 
 asignaturaModel.loadCycle = function (cycle, callback) {
     if (connection) {
-        connection.query('SELECT Nombre, Ciclo, Curso, Horas FROM Asignatura WHERE Ciclo = ?', [cycle], function (err, rows) {
+        connection.query('SELECT * FROM Asignatura WHERE Ciclo = ?', [cycle], function (err, rows) {
             if (!err)
                 callback(null, rows);
             else
@@ -65,9 +76,9 @@ asignaturaModel.addOrInsertSubject = function (subject, callback) {
     }
 }
 
-asignaturaModel.deleteSubject = function (name, callback) {
+asignaturaModel.deleteSubject = function (id, callback) {
     if (connection) {
-        connection.query('DELETE FROM Asignatura WHERE Nombre = ? ', [name], function (err, result) {
+        connection.query('DELETE FROM Asignatura WHERE ID = ? ', [id], function (err, result) {
             if (!err)
                 callback(null, result);
             else

@@ -9,6 +9,16 @@ module.exports.get = function (req, res, next) {
     });
 }
 
+module.exports.getId = function (req, res, next) {
+    var id = req.body.id;
+    alumno.loadId(id, function (err, data) {
+        if (data && data.length !== 0)
+            res.json(data);
+        else
+            res.status(404).json({ "msg": "No hay datos" });
+    });
+}
+
 module.exports.getDni = function (req, res, next) {
     var dni = req.params.dni;
     alumno.loadDni(dni, function (err, data) {
@@ -100,12 +110,12 @@ module.exports.put = function (req, res, next) {
 }
 
 module.exports.delete = function (req, res, next) {
-    var dni = req.body.dni;
+    var id = req.params.id;
     if (alumno.validateDNI(dni)) {
-        //Compruebo que el dni existe en la base de datos
-        alumno.loadDni(dni, function (err, result) {
+        //Compruebo que el id exista en la base de datos
+        alumno.loadId(id, function (err, result) {
             if (result && result.length !== 0) {
-                alumno.deleteStudent(dni, function (err, result) {
+                alumno.deleteStudent(id, function (err, result) {
                     if (result && result.length !== 0)
                         res.json(result);
                     else
@@ -113,7 +123,7 @@ module.exports.delete = function (req, res, next) {
                 });
             }
             else
-                res.status(400).json({ "msg": "DNI no corresponde a ningún alumno" });
+                res.status(400).json({ "msg": "ID no corresponde a ningún alumno" });
         })
     }
     else

@@ -1,8 +1,8 @@
 var mysql = require('mysql');
 var connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: 'root',
+    user: 'default',
+    password: 'default',
     port: '3306',
     database: 'ServicioREST'
 });
@@ -11,7 +11,18 @@ var alumnoModel = {};
 
 alumnoModel.loadAll = function (callback) {
     if (connection) {
-        connection.query('SELECT DNI, Nombre, Apellidos, email FROM Alumno', function (err, rows) {
+        connection.query('SELECT * FROM Alumno', function (err, rows) {
+            if (!err)
+                callback(null, rows);
+            else
+                callback(err, null);
+        });
+    }
+}
+
+alumnoModel.loadId = function (id, callback) {
+    if (connection) {
+        connection.query('SELECT * FROM Alumno WHERE ID = ?', [id], function (err, rows) {
             if (!err)
                 callback(null, rows);
             else
@@ -22,7 +33,7 @@ alumnoModel.loadAll = function (callback) {
 
 alumnoModel.loadDni = function (dni, callback) {
     if (connection) {
-        connection.query('SELECT DNI, Nombre, Apellidos, email FROM Alumno WHERE DNI = ?', [dni], function (err, rows) {
+        connection.query('SELECT * FROM Alumno WHERE DNI = ?', [dni], function (err, rows) {
             if (!err)
                 callback(null, rows);
             else
@@ -33,9 +44,46 @@ alumnoModel.loadDni = function (dni, callback) {
 
 alumnoModel.loadName = function (name, callback) {
     if (connection) {
-        connection.query('SELECT DNI, Nombre, Apellidos, email FROM Alumno WHERE Nombre = ?', [name], function (err, rows) {
+        connection.query('SELECT * FROM Alumno WHERE Nombre = ?', [name], function (err, rows) {
             if (!err)
                 callback(null, rows);
+            else
+                callback(err, null);
+        });
+    }
+}
+
+
+
+alumnoModel.addStudent = function (student, callback) {
+    if (connection) {
+        connection.query('INSERT INTO Alumno SET ?', [student], function (err, result) {
+            if (!err)
+                callback(null, result);
+            else
+                callback(err, null);
+        });
+    }
+}
+
+alumnoModel.addOrInsertStudent = function (student, callback) {
+    if (connection) {
+        connection.query('CALL putAlumno(' + mysql.escape(student.dni) + ', ' + mysql.escape(student.nombre) + ', '
+            + mysql.escape(student.apellidos) + ', ' + mysql.escape(student.email) + ')', function (err, result) {
+                if (!err)
+                    callback(null, result);
+                else
+                    callback(err, null);
+
+            });
+    }
+}
+
+alumnoModel.deleteStudent = function (id, callback) {
+    if (connection) {
+        connection.query('DELETE FROM Alumno WHERE ID = ?', [id], function (err, result) {
+            if (!err)
+                callback(null, result);
             else
                 callback(err, null);
         });
@@ -62,41 +110,6 @@ alumnoModel.validateDNI = function (dni) {
     }
     else
         return false;
-}
-
-alumnoModel.addStudent = function (student, callback) {
-    if (connection) {
-        connection.query('INSERT INTO Alumno SET ?', [student], function (err, result) {
-            if (!err)
-                callback(null, result);
-            else
-                callback(err, null);
-        });
-    }
-}
-
-alumnoModel.addOrInsertStudent = function (student, callback) {
-    if (connection) {
-        connection.query('CALL putAlumno(' + mysql.escape(student.dni) + ', ' + mysql.escape(student.nombre) + ', '
-            + mysql.escape(student.apellidos) + ', ' + mysql.escape(student.email) + ')', function (err, result) {
-                if (!err)
-                    callback(null, result);
-                else
-                    callback(err, null);
-
-            });
-    }
-}
-
-alumnoModel.deleteStudent = function (dni, callback) {
-    if (connection) {
-        connection.query('DELETE FROM Alumno WHERE DNI = ?', [dni], function (err, result) {
-            if (!err)
-                callback(null, result);
-            else
-                callback(err, null);
-        });
-    }
 }
 
 module.exports = alumnoModel;

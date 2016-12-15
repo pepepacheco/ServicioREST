@@ -6,7 +6,17 @@ module.exports.get = function (req, res, next) {
             res.json(data);
         else
             res.status(404).json({ 'msg': 'No hay datos' });
-    })
+    });
+}
+
+module.exports.getId = function (req, res, next) {
+    var id = req.body.id;
+    asignatura.loadId(id, function (err, data) {
+        if (data && data.length !== 0)
+            res.json(data);
+        else
+            res.status(404).json({ 'msg': 'No hay datos' });
+    });
 }
 
 module.exports.getName = function (req, res, next) {
@@ -98,11 +108,11 @@ module.exports.put = function (req, res, next) {
 }
 
 module.exports.delete = function (req, res, next) {
-    var name = req.body.nombre;
+    var id = req.params.id;
 
-    asignatura.loadName(name, function (err, data) {
+    asignatura.loadId(id, function (err, data) {
         if (data && data.length !== 0) {
-            asignatura.deleteSubject(name, function (err, result) {
+            asignatura.deleteSubject(id, function (err, result) {
                 if (result && result !== 0)
                     res.json(result);
                 else
@@ -110,7 +120,7 @@ module.exports.delete = function (req, res, next) {
             });
         }
         else
-            res.status(400).json({ "msg": "Nombre no corresponde a ninguna asignatura" });
+            res.status(400).json({ "msg": "ID no corresponde a ninguna asignatura" });
     });
-    
+
 }
