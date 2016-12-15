@@ -66,8 +66,8 @@ asignaturaModel.createSubject = function (subject, callback) {
 
 asignaturaModel.addOrInsertSubject = function (subject, callback) {
     if (connection) {
-        connection.query('CALL putAsignatura(' + mysql.escape(subject.nombre) + ', ' + mysql.escape(subject.ciclo) + ', '
-            + mysql.escape(subject.curso) + ', ' + mysql.escape(subject.horas) + ')', function (err, result) {
+        connection.query('CALL putAsignatura(' + mysql.escape(subject.Nombre) + ', ' + mysql.escape(subject.Ciclo) + ', '
+            + mysql.escape(subject.Curso) + ', ' + mysql.escape(subject.Horas) + ')', function (err, result) {
                 if (!err)
                     callback(null, result);
                 else

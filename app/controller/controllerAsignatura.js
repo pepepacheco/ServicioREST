@@ -10,7 +10,7 @@ module.exports.get = function (req, res, next) {
 }
 
 module.exports.getId = function (req, res, next) {
-    var id = req.body.id;
+    var id = req.params.id;
     asignatura.loadId(id, function (err, data) {
         if (data && data.length !== 0)
             res.json(data);
@@ -41,23 +41,23 @@ module.exports.getCycle = function (req, res, next) {
 
 module.exports.post = function (req, res, next) {
     var insertSubject = {
-        "nombre": req.body.nombre,
-        "ciclo": req.body.ciclo,
-        "curso": req.body.curso,
-        "horas": req.body.horas
+        "Nombre": req.body.Nombre,
+        "Ciclo": req.body.Ciclo,
+        "Curso": req.body.Curso,
+        "Horas": req.body.Horas
     }
 
-    if (insertSubject.nombre.match(/^[a-zA-Z_áéíóúñ\s]{3,60}$/)) {
-        if (insertSubject.ciclo.match(/^[a-zA-Z_áéíóúñ\s]{3,60}$/)) {
-            if (insertSubject.curso.match(/^[a-zA-Z_áéíóúñ\s]{1,10}$/)) {
-                if (typeof insertSubject.horas === "number" && (!isNaN(insertSubject.horas))
-                    && insertSubject.horas > 0 && insertSubject.horas < 20) {
+    if (insertSubject.Nombre.match(/^[a-zA-Z_áéíóúñ\s]{3,60}$/)) {
+        if (insertSubject.Ciclo.match(/^[a-zA-Z_áéíóúñ\s]{3,60}$/)) {
+            if (insertSubject.Curso.match(/^[a-zA-Z_áéíóúñ\s]{1,10}$/)) {
+                if (typeof insertSubject.Horas === "number" && (!isNaN(insertSubject.Horas))
+                    && insertSubject.Horas > 0 && insertSubject.Horas < 20) {
 
                     asignatura.createSubject(insertSubject, function (err, data) {
                         if (data && data.length !== 0)
-                            res.json(data);
+                            res.status(201).json(data);
                         else
-                            res.status(400).json({ "msg": "La Asignatura ya existe" });
+                            res.status(500).json({ "msg": "Error Interno del servidor" });
                     });
                 }
                 else
@@ -75,17 +75,17 @@ module.exports.post = function (req, res, next) {
 
 module.exports.put = function (req, res, next) {
     var UpdateOrInsertSubject = {
-        "nombre": req.body.nombre,
-        "ciclo": req.body.ciclo,
-        "curso": req.body.curso,
-        "horas": req.body.horas
+        "Nombre": req.body.Nombre,
+        "Ciclo": req.body.Ciclo,
+        "Curso": req.body.Curso,
+        "Horas": req.body.Horas
     }
 
-    if (UpdateOrInsertSubject.nombre.match(/^[a-zA-Z_áéíóúñ\s]{3,60}$/)) {
-        if (UpdateOrInsertSubject.ciclo.match(/^[a-zA-Z_áéíóúñ\s]{3,60}$/)) {
-            if (UpdateOrInsertSubject.curso.match(/^[a-zA-Z_áéíóúñ\s]{1,10}$/)) {
-                if (typeof UpdateOrInsertSubject.horas === "number" && (!isNaN(UpdateOrInsertSubject.horas))
-                    && UpdateOrInsertSubject.horas > 0 && UpdateOrInsertSubject.horas < 20) {
+    if (UpdateOrInsertSubject.Nombre.match(/^[a-zA-Z_áéíóúñ\s]{3,60}$/)) {
+        if (UpdateOrInsertSubject.Ciclo.match(/^[a-zA-Z_áéíóúñ\s]{3,60}$/)) {
+            if (UpdateOrInsertSubject.Curso.match(/^[a-zA-Z_áéíóúñ\s]{1,10}$/)) {
+                if (typeof UpdateOrInsertSubject.Horas === "number" && (!isNaN(UpdateOrInsertSubject.Horas))
+                    && UpdateOrInsertSubject.Horas > 0 && UpdateOrInsertSubject.Horas < 20) {
 
                     asignatura.addOrInsertSubject(UpdateOrInsertSubject, function (err, result) {
                         if (result && result.length !== 0)

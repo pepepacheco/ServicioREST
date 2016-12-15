@@ -68,8 +68,8 @@ alumnoModel.addStudent = function (student, callback) {
 
 alumnoModel.addOrInsertStudent = function (student, callback) {
     if (connection) {
-        connection.query('CALL putAlumno(' + mysql.escape(student.dni) + ', ' + mysql.escape(student.nombre) + ', '
-            + mysql.escape(student.apellidos) + ', ' + mysql.escape(student.email) + ')', function (err, result) {
+        connection.query('CALL putAlumno(' + mysql.escape(student.DNI) + ', ' + mysql.escape(student.Nombre) + ', '
+            + mysql.escape(student.Apellidos) + ', ' + mysql.escape(student.email) + ')', function (err, result) {
                 if (!err)
                     callback(null, result);
                 else

@@ -49,6 +49,7 @@ if (process.argv[2] === 'create') {
     ID_asignatura INT NOT NULL, \
     fecha_inicio DATE NOT NULL, \
     fecha_fin DATE NOT NULL, \
+    PRIMARY KEY(ID_alumno, ID_asignatura), \
     FOREIGN KEY (ID_alumno) REFERENCES Alumno(ID) ON DELETE CASCADE, \
     FOREIGN KEY (ID_asignatura) REFERENCES Asignatura(ID) ON DELETE CASCADE \
     );'
