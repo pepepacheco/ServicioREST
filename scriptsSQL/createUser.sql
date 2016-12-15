@@ -1,2 +1,5 @@
 CREATE USER 'default'@'localhost' IDENTIFIED BY 'default';
-GRANT ALL ON ServicioREST.* TO 'default'@'localhost' WITH GRANT OPTION;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ServicioREST.* TO 'default'@'localhost';
+GRANT EXECUTE ON PROCEDURE ServicioREST.putAlumno TO 'default'@'localhost';
+GRANT EXECUTE ON PROCEDURE ServicioREST.putAsignatura TO 'default'@'localhost';
+GRANT EXECUTE ON PROCEDURE ServicioREST.putMatricula TO 'default'@'localhost';
