@@ -88,8 +88,12 @@ module.exports.put = function (req, res, next) {
                     && UpdateOrInsertSubject.Horas > 0 && UpdateOrInsertSubject.Horas < 20) {
 
                     asignatura.addOrInsertSubject(UpdateOrInsertSubject, function (err, result) {
-                        if (result && result.length !== 0)
-                            res.json(result);
+                        if (result && result.length !== 0) {
+                            if (result[0][0].code === "200")
+                                res.status(200).json({ "msg" : "Recurso Actualizado"});
+                            else if (result[0][0].code === "201")
+                                res.status(201).json({ "msg" : "Recurso Creado"});
+                        }
                         else
                             res.status(500).json({ "msg": "Error Interno del servidor" });
                     });

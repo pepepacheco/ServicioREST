@@ -85,8 +85,12 @@ module.exports.put = function (req, res, next) {
                 if (enrollmentUpdateOrInsert.fecha_fin.match(/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/)) {
 
                     matricula.addOrInsertEnrollment(enrollmentUpdateOrInsert, function (err, result) {
-                        if (result && result.length !== 0)
-                            res.json(result);
+                        if (result && result.length !== 0) {
+                            if (result[0][0].code === "200")
+                                res.status(200).json({ "msg" : "Recurso Actualizado"});
+                            else if (result[0][0].code === "201")
+                                res.status(201).json({ "msg" : "Recurso Creado"});
+                        }
                         else
                             res.status(500).json({ "msg": "Error Interno del servidor" });
                     });
