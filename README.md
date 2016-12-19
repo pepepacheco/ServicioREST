@@ -38,8 +38,8 @@
 
 ### 7 -> Crear tablas e Insertar campos de prueba
 ```
-    *	$ node tablas.js create
-    *	$ node tablas.js insert
+    $ node tablas.js create
+    $ node tablas.js insert
 
     (el argumento "delete" borra todas las tablas)
 ```
