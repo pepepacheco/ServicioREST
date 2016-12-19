@@ -2,38 +2,38 @@
 
 ### 1 -> Instalar Node
 ```
-    *   $ sudo apt-get install nodejs
-    *   $ sudo apt-get install npm
+    $ sudo apt-get install nodejs
+    $ sudo apt-get install npm
 ```
 
 ### 2 -> Instalar MYSQL
 ```
-    *   $ sudo apt-get install mysql-server
-    *   $ sudo mysql_secure_installation
+    $ sudo apt-get install mysql-server
+    $ sudo mysql_secure_installation
 ```
 
 ### 3 -> Crear base de datos
 ```
-    *   $ mysql -u root - p
-    *   mysql> source scriptsSQL/createDatabase.sql
+    $ mysql -u root - p
+    mysql> source scriptsSQL/createDatabase.sql
 ```
 
 ### 4 -> Crear procedures
 ```
-    *   $ mysql -u root - p
-    *   mysql> source scriptsSQL/putAlumno.sql
-    *   mysql> source scriptsSQL/putAsignatura.sql
-    *   mysql> source scriptsSQL/putMatricula.sql
+    $ mysql -u root - p
+    mysql> source scriptsSQL/putAlumno.sql
+    mysql> source scriptsSQL/putAsignatura.sql
+    mysql> source scriptsSQL/putMatricula.sql
 ```
 
 ### 5 -> Crear usuario
 ```
-    *   mysql> source scriptsSQL/createUser.sql
+    mysql> source scriptsSQL/createUser.sql
 ```
 
 ### 6 -> Instalar dependencias
 ```
-    *   $ npm install
+    $ npm install
 ```
 
 ### 7 -> Crear tablas e Insertar campos de prueba
@@ -46,15 +46,15 @@
 
 ### 8 -> Lanzar servidor
 ```
-    *   $ npm start
+    $ npm start
 ```
 
 ## Lanzar proxy de http a https (Opcional)
-```
 ### Abrir puerto 4000
-
-    *   $ ufw allow 4000 
-
+```
+    $ ufw allow 4000 
+```
 ### Lanzar servidor proxy
-    *   $ node bin/wwwhttp
+```
+    $ node bin/wwwhttp
 ```
