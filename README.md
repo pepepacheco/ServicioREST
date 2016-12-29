@@ -10,7 +10,6 @@
 ### 2 -> Instalar MYSQL
 ```
     $ sudo apt-get install mysql-server
-    $ sudo mysql_secure_installation
 ```
 
 ### 3 -> Crear base de datos
