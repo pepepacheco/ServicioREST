@@ -50,13 +50,3 @@
     $ sudo ufw allow 3000 
     $ npm start
 ```
-
-## Lanzar proxy de http a https (Opcional)
-### Abrir puerto 4000
-```
-    $ sudo ufw allow 4000 
-```
-### Lanzar servidor proxy
-```
-    $ node bin/wwwhttp
-```
