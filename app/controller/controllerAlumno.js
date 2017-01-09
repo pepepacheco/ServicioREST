@@ -40,21 +40,21 @@ module.exports.getName = function (req, res, next) {
 }
 
 module.exports.post = function (req, res, next) {
-    var InsertStudient = {
+    var insertStudent = {
         "DNI": req.body.DNI,
         "Nombre": req.body.Nombre,
         "Apellidos": req.body.Apellidos,
         "email": req.body.email
     }
 
-    if (alumno.validateDNI(InsertStudient.DNI)) {
-        if (InsertStudient.Nombre.match(/^[A-Z][a-zA-Z_áéíóúñ\s-]{3,20}$/)) {
-            if (InsertStudient.Apellidos.match(/^[A-Z][a-zA-Z_áéíóúñ\s]{3,40}$/)) {
-                if (InsertStudient.email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)) {
+    if (alumno.validateDNI(insertStudent.DNI)) {
+        if (insertStudent.Nombre.match(/^[A-Z][a-zA-Z_áéíóúñ\s-]{3,20}$/)) {
+            if (insertStudent.Apellidos.match(/^[A-Z][a-zA-Z_áéíóúñ\s]{3,40}$/)) {
+                if (insertStudent.email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)) {
 
-                    alumno.addStudent(InsertStudient, function (err, result) {
+                    alumno.addStudent(insertStudent, function (err, result) {
                         if (result && result.length !== 0)
-                            res.status(201).json(InsertStudient);
+                            res.status(201).json(insertStudent);
                         else
                             res.status(400).json({ "msg": "El alumno ya existe" });
                     });
@@ -75,24 +75,24 @@ module.exports.post = function (req, res, next) {
 }
 
 module.exports.put = function (req, res, next) {
-    var UpdateOrInsertStudient = {
+    var updateOrInsertStudent = {
         "DNI": req.body.DNI,
         "Nombre": req.body.Nombre,
         "Apellidos": req.body.Apellidos,
         "email": req.body.email
     }
 
-    if (alumno.validateDNI(UpdateOrInsertStudient.DNI)) {
-        if (UpdateOrInsertStudient.Nombre.match(/^[A-Z][a-zA-Z_áéíóúñ\s-]{3,20}$/)) {
-            if (UpdateOrInsertStudient.Apellidos.match(/^[a-zA-Z_áéíóúñ\s]{3,40}$/)) {
-                if (UpdateOrInsertStudient.email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)) {
+    if (alumno.validateDNI(updateOrInsertStudent.DNI)) {
+        if (updateOrInsertStudent.Nombre.match(/^[A-Z][a-zA-Z_áéíóúñ\s-]{3,20}$/)) {
+            if (updateOrInsertStudent.Apellidos.match(/^[a-zA-Z_áéíóúñ\s]{3,40}$/)) {
+                if (updateOrInsertStudent.email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)) {
 
-                    alumno.addOrInsertStudent(UpdateOrInsertStudient, function (err, result) {
+                    alumno.addOrInsertStudent(updateOrInsertStudent, function (err, result) {
                         if (result && result.length !== 0) {
                             if (result[0][0].code === "200")
-                                res.status(200).json(InsertStudient);
+                                res.status(200).json(updateOrInsertStudent);
                             else if (result[0][0].code === "201")
-                                res.status(201).json(InsertStudient);
+                                res.status(201).json(updateOrInsertStudent);
                         }
                         else
                             res.status(500).json({ "msg": "Error Interno del servidor" });
@@ -116,11 +116,11 @@ module.exports.put = function (req, res, next) {
 module.exports.delete = function (req, res, next) {
     var id = req.params.id;
     //Compruebo que el id exista en la base de datos
-    alumno.loadId(id, function (err, result) {
-        if (result && result.length !== 0) {
+    alumno.loadId(id, function (err, resAlumno) {
+        if (resAlumno && resAlumno.length !== 0) {
             alumno.deleteStudent(id, function (err, result) {
                 if (result && result.length !== 0)
-                    res.json(InsertStudient);
+                    res.json(resAlumno);
                 else
                     res.status(500).json({ "msg": "Error Interno del servidor" });
             });

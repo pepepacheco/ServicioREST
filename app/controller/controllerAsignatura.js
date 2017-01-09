@@ -74,25 +74,25 @@ module.exports.post = function (req, res, next) {
 }
 
 module.exports.put = function (req, res, next) {
-    var UpdateOrInsertSubject = {
+    var updateOrInsertSubject = {
         "Nombre": req.body.Nombre,
         "Ciclo": req.body.Ciclo,
         "Curso": req.body.Curso,
         "Horas": req.body.Horas
     }
 
-    if (UpdateOrInsertSubject.Nombre.match(/^[a-zA-Z_áéíóúñ\s]{3,60}$/)) {
-        if (UpdateOrInsertSubject.Ciclo.match(/^[a-zA-Z_áéíóúñ\s]{3,60}$/)) {
-            if (UpdateOrInsertSubject.Curso.match(/^[a-zA-Z_áéíóúñ\s]{1,10}$/)) {
-                if (typeof UpdateOrInsertSubject.Horas === "number" && (!isNaN(UpdateOrInsertSubject.Horas))
-                    && UpdateOrInsertSubject.Horas > 0 && UpdateOrInsertSubject.Horas < 20) {
+    if (updateOrInsertSubject.Nombre.match(/^[a-zA-Z_áéíóúñ\s]{3,60}$/)) {
+        if (updateOrInsertSubject.Ciclo.match(/^[a-zA-Z_áéíóúñ\s]{3,60}$/)) {
+            if (updateOrInsertSubject.Curso.match(/^[a-zA-Z_áéíóúñ\s]{1,10}$/)) {
+                if (typeof updateOrInsertSubject.Horas === "number" && (!isNaN(updateOrInsertSubject.Horas))
+                    && updateOrInsertSubject.Horas > 0 && updateOrInsertSubject.Horas < 20) {
 
-                    asignatura.addOrInsertSubject(UpdateOrInsertSubject, function (err, result) {
+                    asignatura.addOrInsertSubject(updateOrInsertSubject, function (err, result) {
                         if (result && result.length !== 0) {
                             if (result[0][0].code === "200")
-                                res.status(200).json(insertSubject);
+                                res.status(200).json(updateOrInsertSubject);
                             else if (result[0][0].code === "201")
-                                res.status(201).json(insertSubject);
+                                res.status(201).json(updateOrInsertSubject);
                         }
                         else
                             res.status(500).json({ "msg": "Error Interno del servidor" });
@@ -114,11 +114,11 @@ module.exports.put = function (req, res, next) {
 module.exports.delete = function (req, res, next) {
     var id = req.params.id;
 
-    asignatura.loadId(id, function (err, data) {
-        if (data && data.length !== 0) {
+    asignatura.loadId(id, function (err, resAsignatura) {
+        if (resAsignatura && resAsignatura.length !== 0) {
             asignatura.deleteSubject(id, function (err, result) {
                 if (result && result !== 0)
-                    res.json(insertSubject);
+                    res.json(resAsignatura);
                 else
                     res.status(500).json({ "msg": "Error interno del servidor" });
             });
