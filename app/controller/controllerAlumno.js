@@ -54,7 +54,7 @@ module.exports.post = function (req, res, next) {
 
                     alumno.addStudent(InsertStudient, function (err, result) {
                         if (result && result.length !== 0)
-                            res.status(201).json(result);
+                            res.status(201).json(InsertStudient);
                         else
                             res.status(400).json({ "msg": "El alumno ya existe" });
                     });
@@ -90,9 +90,9 @@ module.exports.put = function (req, res, next) {
                     alumno.addOrInsertStudent(UpdateOrInsertStudient, function (err, result) {
                         if (result && result.length !== 0) {
                             if (result[0][0].code === "200")
-                                res.status(200).json({ "msg" : "Recurso Actualizado"});
+                                res.status(200).json(InsertStudient);
                             else if (result[0][0].code === "201")
-                                res.status(201).json({ "msg" : "Recurso Creado"});
+                                res.status(201).json(InsertStudient);
                         }
                         else
                             res.status(500).json({ "msg": "Error Interno del servidor" });
@@ -120,7 +120,7 @@ module.exports.delete = function (req, res, next) {
         if (result && result.length !== 0) {
             alumno.deleteStudent(id, function (err, result) {
                 if (result && result.length !== 0)
-                    res.json(result);
+                    res.json(InsertStudient);
                 else
                     res.status(500).json({ "msg": "Error Interno del servidor" });
             });

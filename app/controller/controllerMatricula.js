@@ -53,7 +53,7 @@ module.exports.post = function (req, res, next) {
 
                     matricula.addEnrollment(enrollmentInsert, function (err, result) {
                         if (result && result.length !== 0)
-                            res.status(201).json(result);
+                            res.status(201).json(enrollmentSubject);
                         else
                             res.status(500).json({ "msg": "Error Interno del servidor" });
                     });
@@ -87,9 +87,9 @@ module.exports.put = function (req, res, next) {
                     matricula.addOrInsertEnrollment(enrollmentUpdateOrInsert, function (err, result) {
                         if (result && result.length !== 0) {
                             if (result[0][0].code === "200")
-                                res.status(200).json({ "msg" : "Recurso Actualizado"});
+                                res.status(200).json(enrollmentSubject);
                             else if (result[0][0].code === "201")
-                                res.status(201).json({ "msg" : "Recurso Creado"});
+                                res.status(201).json(enrollmentSubject);
                         }
                         else
                             res.status(500).json({ "msg": "Error Interno del servidor" });
@@ -116,7 +116,7 @@ module.exports.delete = function (req, res, next) {
         if (data && data.length !== 0) {
             matricula.deleteEnrollment(idAlumno, idAsignatura, function (err, result) {
                 if (result && result !== 0)
-                    res.json(result)
+                    res.json(enrollmentSubject)
                 else
                     res.status(500).json({ "msg": "Error Interno del servidor" });
             });
