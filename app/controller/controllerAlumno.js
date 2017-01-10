@@ -1,4 +1,10 @@
 var alumno = require('../model/alumno.js');
+var student = {
+    "DNI": undefined,
+    "Nombre": undefined,
+    "Apellidos": undefined,
+    "email": undefined
+}
 
 module.exports.get = function (req, res, next) {
     alumno.loadAll(function (err, data) {
@@ -40,21 +46,19 @@ module.exports.getName = function (req, res, next) {
 }
 
 module.exports.post = function (req, res, next) {
-    var insertStudent = {
-        "DNI": req.body.DNI,
-        "Nombre": req.body.Nombre,
-        "Apellidos": req.body.Apellidos,
-        "email": req.body.email
-    }
+    student.DNI = req.body.DNI;
+    student.Nombre = req.body.Nombre;
+    student.Apellidos = req.body.Apellidos;
+    student.email = req.body.email;
 
-    if (alumno.validateDNI(insertStudent.DNI)) {
-        if (insertStudent.Nombre.match(/^[A-Z][a-zA-Z_áéíóúñ\s-]{3,20}$/)) {
-            if (insertStudent.Apellidos.match(/^[A-Z][a-zA-Z_áéíóúñ\s]{3,40}$/)) {
-                if (insertStudent.email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)) {
+    if (alumno.validateDNI(student.DNI)) {
+        if (student.Nombre.match(/^[A-Z][a-zA-Z_áéíóúñ\s-]{3,20}$/)) {
+            if (student.Apellidos.match(/^[A-Z][a-zA-Z_áéíóúñ\s]{3,40}$/)) {
+                if (student.email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)) {
 
-                    alumno.addStudent(insertStudent, function (err, result) {
+                    alumno.addStudent(student, function (err, result) {
                         if (result && result.length !== 0)
-                            res.status(201).json(insertStudent);
+                            res.status(201).json(student);
                         else
                             res.status(400).json({ "msg": "El alumno ya existe" });
                     });
@@ -75,24 +79,22 @@ module.exports.post = function (req, res, next) {
 }
 
 module.exports.put = function (req, res, next) {
-    var updateOrInsertStudent = {
-        "DNI": req.body.DNI,
-        "Nombre": req.body.Nombre,
-        "Apellidos": req.body.Apellidos,
-        "email": req.body.email
-    }
+    student.DNI = req.body.DNI;
+    student.Nombre = req.body.Nombre;
+    student.Apellidos = req.body.Apellidos;
+    student.email = req.body.email;
 
-    if (alumno.validateDNI(updateOrInsertStudent.DNI)) {
-        if (updateOrInsertStudent.Nombre.match(/^[A-Z][a-zA-Z_áéíóúñ\s-]{3,20}$/)) {
-            if (updateOrInsertStudent.Apellidos.match(/^[a-zA-Z_áéíóúñ\s]{3,40}$/)) {
-                if (updateOrInsertStudent.email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)) {
+    if (alumno.validateDNI(student.DNI)) {
+        if (student.Nombre.match(/^[A-Z][a-zA-Z_áéíóúñ\s-]{3,20}$/)) {
+            if (student.Apellidos.match(/^[a-zA-Z_áéíóúñ\s]{3,40}$/)) {
+                if (student.email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)) {
 
-                    alumno.addOrInsertStudent(updateOrInsertStudent, function (err, result) {
+                    alumno.addOrstudent(student, function (err, result) {
                         if (result && result.length !== 0) {
                             if (result[0][0].code === "200")
-                                res.status(200).json(updateOrInsertStudent);
+                                res.status(200).json(student);
                             else if (result[0][0].code === "201")
-                                res.status(201).json(updateOrInsertStudent);
+                                res.status(201).json(student);
                         }
                         else
                             res.status(500).json({ "msg": "Error Interno del servidor" });

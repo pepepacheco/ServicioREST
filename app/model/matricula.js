@@ -4,7 +4,8 @@ var connection = mysql.createConnection({
     user: 'default',
     password: 'default',
     port: '3306',
-    database: 'ServicioREST'
+    database: 'ServicioREST',
+    dateStrings: 'date'
 });
 
 var matriculaModel = {};
@@ -58,7 +59,11 @@ matriculaModel.loadForSubject = function (nombre, callback) {
 
 matriculaModel.loadIds = function (idAlumno, idAsignatura, callback) {
     if (connection) {
-        connection.query('SELECT * FROM Matricula WHERE ID_alumno = ? AND ID_asignatura = ?', [idAlumno, idAsignatura], function (err, rows) {
+        var query = 'SELECT Alumno.Nombre, Alumno.Apellidos, Asignatura.Nombre "Asignatura", Matricula.fecha_inicio, \
+         Matricula.fecha_fin FROM Alumno, Asignatura, Matricula WHERE Alumno.ID = Matricula.ID_alumno  \
+         AND Asignatura.ID = Matricula.ID_asignatura AND (ID_alumno = ? AND ID_asignatura = ?)';
+
+        connection.query(query, [idAlumno, idAsignatura], function (err, rows) {
             if (!err)
                 callback(null, rows);
             else

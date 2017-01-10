@@ -1,13 +1,11 @@
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    port: '3306',
-    database: 'ServicioREST'
-});
-
 var matricula = require('../model/matricula.js');
+var enrollment = {
+    "ID_alumno": undefined,
+    "ID_asignatura": undefined,
+    "fecha_inicio": undefined,
+    "fecha_fin": undefined
+}
+var regexDate = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/;
 
 module.exports.get = function (req, res, next) {
     matricula.loadAll(function (err, data) {
@@ -39,24 +37,27 @@ module.exports.getForSubject = function (req, res, next) {
 }
 
 module.exports.post = function (req, res, next) {
-    var enrollmentInsert = {
-        "ID_alumno": req.body.ID_alumno,
-        "ID_asignatura": req.body.ID_asignatura,
-        "fecha_inicio": req.body.fecha_inicio,
-        "fecha_fin": req.body.fecha_fin
-    }
+    enrollment.ID_alumno = req.body.ID_alumno;
+    enrollment.ID_asignatura = req.body.ID_asignatura;
+    enrollment.fecha_inicio = req.body.fecha_inicio;
+    enrollment.fecha_fin = req.body.fecha_fin;
 
-    if (typeof enrollmentInsert.ID_alumno === "number" && (!isNaN(enrollmentInsert.ID_alumno))) {
-        if (typeof enrollmentInsert.ID_asignatura === "number" && (!isNaN(enrollmentInsert.ID_alumno))) {
-            if (enrollmentInsert.fecha_inicio.match(/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/)) {
-                if (enrollmentInsert.fecha_fin.match(/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/)) {
 
-                    matricula.addEnrollment(enrollmentInsert, function (err, result) {
-                        if (result && result.length !== 0)
-                            res.status(201).json(enrollmentSubject);
+    if (typeof enrollment.ID_alumno === "number" && (!isNaN(enrollment.ID_alumno))) {
+        if (typeof enrollment.ID_asignatura === "number" && (!isNaN(enrollment.ID_alumno))) {
+            if (enrollment.fecha_inicio.match(regexDate)) {
+                if (enrollment.fecha_fin.match(regexDate)) {
+
+                    matricula.addEnrollment(enrollment, function (err, result) {
+                        if (result && result.length !== 0) {
+                            matricula.loadIds(enrollment.ID_alumno, enrollment.ID_asignatura, function (err, data) {
+                                res.status(201).json(data);
+                            })
+                        }
                         else
                             res.status(500).json({ "msg": "Error Interno del servidor" });
                     });
+
                 }
                 else
                     res.status(400).json({ "msg": "Fecha de finalización incorrecta" });
@@ -72,28 +73,29 @@ module.exports.post = function (req, res, next) {
 }
 
 module.exports.put = function (req, res, next) {
-    var enrollmentUpdateOrInsert = {
-        "ID_alumno": req.body.ID_alumno,
-        "ID_asignatura": req.body.ID_asignatura,
-        "fecha_inicio": req.body.fecha_inicio,
-        "fecha_fin": req.body.fecha_fin
-    }
+    enrollment.ID_alumno = req.body.ID_alumno;
+    enrollment.ID_asignatura = req.body.ID_asignatura;
+    enrollment.fecha_inicio = req.body.fecha_inicio;
+    enrollment.fecha_fin = req.body.fecha_fin;
 
-    if (typeof enrollmentUpdateOrInsert.ID_alumno === "number" && (!isNaN(enrollmentUpdateOrInsert.ID_alumno))) {
-        if (typeof enrollmentUpdateOrInsert.ID_asignatura === "number" && (!isNaN(enrollmentUpdateOrInsert.ID_alumno))) {
-            if (enrollmentUpdateOrInsert.fecha_inicio.match(/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/)) {
-                if (enrollmentUpdateOrInsert.fecha_fin.match(/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/)) {
+    if (typeof enrollment.ID_alumno === "number" && (!isNaN(enrollment.ID_alumno))) {
+        if (typeof enrollment.ID_asignatura === "number" && (!isNaN(enrollment.ID_alumno))) {
+            if (enrollment.fecha_inicio.match(regexDate)) {
+                if (enrollment.fecha_fin.match(regexDate)) {
 
-                    matricula.addOrInsertEnrollment(enrollmentUpdateOrInsert, function (err, result) {
+                    matricula.addOrInsertEnrollment(enrollment, function (err, result) {
                         if (result && result.length !== 0) {
-                            if (result[0][0].code === "200")
-                                res.status(200).json(enrollmentSubject);
-                            else if (result[0][0].code === "201")
-                                res.status(201).json(enrollmentSubject);
+                            matricula.loadIds(enrollment.ID_alumno, enrollment.ID_asignatura, function (err, data) {
+                                if (result[0][0].code === "200")
+                                    res.status(200).json(data);
+                                else if (result[0][0].code === "201")
+                                    res.status(201).json(data);
+                            });
                         }
                         else
                             res.status(500).json({ "msg": "Error Interno del servidor" });
                     });
+
                 }
                 else
                     res.status(400).json({ "msg": "Fecha de finalización incorrecta" });
@@ -115,8 +117,10 @@ module.exports.delete = function (req, res, next) {
     matricula.loadIds(idAlumno, idAsignatura, function (err, data) {
         if (data && data.length !== 0) {
             matricula.deleteEnrollment(idAlumno, idAsignatura, function (err, result) {
-                if (result && result !== 0)
-                    res.json(enrollmentSubject)
+                if (result && result !== 0) {
+                    res.json(data);
+
+                }
                 else
                     res.status(500).json({ "msg": "Error Interno del servidor" });
             });
@@ -124,5 +128,4 @@ module.exports.delete = function (req, res, next) {
         else
             res.status(400).json({ "msg": "La matrícula no existe" });
     });
-    
 }
