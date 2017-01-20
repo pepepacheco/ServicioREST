@@ -1,10 +1,5 @@
 var asignatura = require('../model/asignatura.js');
-var subject = {
-    "Nombre": undefined,
-    "Ciclo": undefined,
-    "Curso": undefined,
-    "Horas": undefined
-}
+var subject;
 
 module.exports.get = function (req, res, next) {
     asignatura.loadAll(function (err, data) {
@@ -51,7 +46,6 @@ module.exports.post = function (req, res, next) {
     subject.Curso = req.body.Curso;
     subject.Horas = req.body.Horas;
 
-
     if (subject.Nombre.match(/^[a-zA-Z_áéíóúñ\s]{3,60}$/)) {
         if (subject.Ciclo.match(/^[a-zA-Z_áéíóúñ\s]{3,60}$/)) {
             if (subject.Curso.match(/^[a-zA-Z_áéíóúñ\s]{1,10}$/)) {
@@ -90,7 +84,7 @@ module.exports.put = function (req, res, next) {
                 if (typeof subject.Horas === "number" && (!isNaN(subject.Horas))
                     && subject.Horas > 0 && subject.Horas < 20) {
 
-                    asignatura.addOrsubject(subject, function (err, result) {
+                    asignatura.addOrInsertSubject(subject, function (err, result) {
                         if (result && result.length !== 0) {
                             if (result[0][0].code === "200")
                                 res.status(200).json(subject);

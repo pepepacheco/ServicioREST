@@ -1,10 +1,5 @@
 var alumno = require('../model/alumno.js');
-var student = {
-    "DNI": undefined,
-    "Nombre": undefined,
-    "Apellidos": undefined,
-    "email": undefined
-}
+var student;
 
 module.exports.get = function (req, res, next) {
     alumno.loadAll(function (err, data) {
@@ -89,7 +84,7 @@ module.exports.put = function (req, res, next) {
             if (student.Apellidos.match(/^[a-zA-Z_áéíóúñ\s]{3,40}$/)) {
                 if (student.email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)) {
 
-                    alumno.addOrstudent(student, function (err, result) {
+                    alumno.addOrInsertStudent(student, function (err, result) {
                         if (result && result.length !== 0) {
                             if (result[0][0].code === "200")
                                 res.status(200).json(student);
