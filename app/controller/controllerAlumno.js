@@ -1,5 +1,5 @@
 var alumno = require('../model/alumno.js');
-var student;
+var student = {};
 
 module.exports.get = function (req, res, next) {
     alumno.loadAll(function (err, data) {

@@ -1,5 +1,5 @@
 var asignatura = require('../model/asignatura.js');
-var subject;
+var subject = {};
 
 module.exports.get = function (req, res, next) {
     asignatura.loadAll(function (err, data) {

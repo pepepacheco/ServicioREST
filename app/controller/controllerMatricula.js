@@ -1,5 +1,5 @@
 var matricula = require('../model/matricula.js');
-var enrollment;
+var enrollment = {};
 var regexDate = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/;
 
 module.exports.get = function (req, res, next) {
