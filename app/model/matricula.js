@@ -12,7 +12,7 @@ var matriculaModel = {};
 
 matriculaModel.loadAll = function (callback) {
     if (connection) {
-        var query = 'SELECT Alumno.Nombre, Alumno.Apellidos, Asignatura.Nombre "Asignatura", Matricula.fecha_inicio, \
+        var query = 'SELECT Alumno.ID "Alumno_ID", Alumno.Nombre, Alumno.Apellidos, Asignatura.ID "Asignatura_ID", Asignatura.Nombre "Asignatura", Matricula.fecha_inicio, \
          Matricula.fecha_fin FROM Alumno, Asignatura, Matricula WHERE Alumno.ID = Matricula.ID_alumno  \
          AND Asignatura.ID = Matricula.ID_asignatura';
 
